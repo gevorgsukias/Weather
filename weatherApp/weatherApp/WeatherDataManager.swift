@@ -12,11 +12,13 @@ class WeatherDataManager {
     
     var days : [WeatherDayData] = []
     
-    init(json : JSON) {
-        let weatherArray = json["list"].arrayObject as! [[String: Any]]
-        for dictionary in weatherArray {
-            let weatherDay = WeatherDayData.init(dictionary: dictionary)
-            days.append(weatherDay)
+    init(json : JSON?) {
+        if json != nil {
+            let weatherArray = json!["list"].arrayObject as! [[String: Any]]
+            for dictionary in weatherArray {
+                let weatherDay = WeatherDayData.init(dictionary: dictionary)
+                days.append(weatherDay)
+            }
         }
     }
 }

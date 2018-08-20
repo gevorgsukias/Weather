@@ -26,7 +26,7 @@
                                 </connections>
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hjz-UQ-7PC">
-                                <rect key="frame" x="139" y="309" width="96" height="48"/>
+                                <rect key="frame" x="16" y="76" width="96" height="48"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="0LG-tU-7zs"/>
@@ -44,17 +44,44 @@
                                     <action selector="weatherBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F5L-Ca-L9Q"/>
                                 </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dAm-qI-T3c">
+                                <rect key="frame" x="16" y="132" width="343" height="535"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NyV-pg-Dkq">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Prk-Lf-Q7S">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="0.4052734375" green="0.38970269099999999" blue="0.83648003469999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Hjz-UQ-7PC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="179-GR-m98"/>
+                            <constraint firstItem="Hjz-UQ-7PC" firstAttribute="top" secondItem="I3p-Y8-kdr" secondAttribute="bottom" id="2yC-vf-ZYB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dAm-qI-T3c" secondAttribute="trailing" constant="16" id="4MR-zn-gdE"/>
                             <constraint firstItem="I3p-Y8-kdr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="DCd-Sf-bX3"/>
+                            <constraint firstItem="Hjz-UQ-7PC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="EIt-7L-Arl"/>
                             <constraint firstItem="I3p-Y8-kdr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Fov-Lw-hWk"/>
-                            <constraint firstItem="Hjz-UQ-7PC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="TMJ-R4-4zC"/>
+                            <constraint firstItem="dAm-qI-T3c" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="SQF-sL-ooe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dAm-qI-T3c" secondAttribute="bottom" id="pUo-nT-euG"/>
+                            <constraint firstItem="dAm-qI-T3c" firstAttribute="top" secondItem="Hjz-UQ-7PC" secondAttribute="bottom" constant="8" id="rWc-Pm-NcH"/>
                             <constraint firstItem="I3p-Y8-kdr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="x29-0g-caJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="weatherCollectionView" destination="dAm-qI-T3c" id="s4B-7O-bKX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
