@@ -13,9 +13,9 @@ enum WeatherError: Error {
     case noData
 }
 
-class WeatherManager {
+class WeatherRequestManager {
     
-    static let shared = WeatherManager()
+    static let shared = WeatherRequestManager()
     
     let session = URLSession.shared
     fileprivate let APIKey = "1cb8f3063e4b8ba7e9d5af908b920281"

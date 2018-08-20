@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var weatherDataManager : WeatherDataManager?
     let session = URLSession.shared
     
     override func viewDidLoad() {
@@ -21,10 +22,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func weatherBtnPressed(_ sender: UIButton) {
-        WeatherManager.shared.getWeather(cityName: "London", fail: { (error) in
+        WeatherRequestManager.shared.getWeather(cityName: "London", fail: { (error) in
             
-        }) { (json) in
-            print(json)
+        }) { [weak self] (json) in
+            self?.weatherDataManager = WeatherDataManager.init(json: json)
         }
     }
 }
