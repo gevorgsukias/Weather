@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func weatherBtnPressed(_ sender: UIButton) {
-        WeatherRequestManager.shared.getWeather(cityName: "London", fail: { (error) in
+        WeatherRequestManager.shared.getWeather(cityName: "Moscow", fail: { (error) in
             
         }) { [weak self] (json) in
             self?.weatherDataManager = WeatherDataManager.init(json: json)
@@ -54,13 +54,17 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
         let c = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath)
         
         if let cell = c as? WeatherCollectionViewCell {
-            cell.temperatureLabel.text = self.weatherDataManager?.days[indexPath.row].temperature.stringValue
+            cell.setupWithWeatherDayData(day: self.weatherDataManager?.days[indexPath.row])
         }
         
         return c
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 100)
+        return CGSize(width: collectionView.bounds.width, height: 140)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(12, 0, 84, 0)
     }
 }

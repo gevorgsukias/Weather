@@ -15,6 +15,7 @@ class WeatherDayData {
     var maxTemperature : NSNumber!
     var weather : String!
     var weatherDescription : String!
+    var date : String!
     
     init(dictionary : [String: Any]) {
         let main: [String: Any] = dictionary["main"] as! [String: Any]
@@ -26,5 +27,7 @@ class WeatherDayData {
         let weatherDict = weatherArray.first as! [String: Any]
         weather = weatherDict["main"] as! String
         weatherDescription = weatherDict["description"] as! String
+        
+        date = dictionary["dt_txt"] as! String
     }
 }

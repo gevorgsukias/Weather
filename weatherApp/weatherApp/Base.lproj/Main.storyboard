@@ -18,6 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clouds_background" translatesAutoresizingMaskIntoConstraints="NO" id="RZf-5X-FJQ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="I3p-Y8-kdr">
                                 <rect key="frame" x="0.0" y="20" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -30,7 +33,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="0LG-tU-7zs"/>
-                                    <constraint firstAttribute="width" constant="96" id="Vkp-dF-KMs"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="96" id="9Y0-kK-fEg"/>
                                 </constraints>
                                 <state key="normal" title="weather">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -44,9 +47,9 @@
                                     <action selector="weatherBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F5L-Ca-L9Q"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dAm-qI-T3c">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dAm-qI-T3c">
                                 <rect key="frame" x="16" y="132" width="343" height="535"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NyV-pg-Dkq">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -64,17 +67,36 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view clipsSubviews="YES" alpha="0.34999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLo-nH-yuD">
+                                <rect key="frame" x="16" y="129" width="343" height="3"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="3" id="Nyy-WV-w3P"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.4052734375" green="0.38970269099999999" blue="0.83648003469999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Hjz-UQ-7PC" firstAttribute="top" secondItem="I3p-Y8-kdr" secondAttribute="bottom" id="2yC-vf-ZYB"/>
+                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="3Ir-AW-sFb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dAm-qI-T3c" secondAttribute="trailing" constant="16" id="4MR-zn-gdE"/>
+                            <constraint firstItem="dAm-qI-T3c" firstAttribute="top" secondItem="fLo-nH-yuD" secondAttribute="bottom" id="AQl-fT-PG4"/>
                             <constraint firstItem="I3p-Y8-kdr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="DCd-Sf-bX3"/>
                             <constraint firstItem="Hjz-UQ-7PC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="EIt-7L-Arl"/>
                             <constraint firstItem="I3p-Y8-kdr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Fov-Lw-hWk"/>
+                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="HhT-c1-Rjf"/>
                             <constraint firstItem="dAm-qI-T3c" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="SQF-sL-ooe"/>
+                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hbk-bE-nAz"/>
+                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="pGU-5b-Nq7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dAm-qI-T3c" secondAttribute="bottom" id="pUo-nT-euG"/>
                             <constraint firstItem="dAm-qI-T3c" firstAttribute="top" secondItem="Hjz-UQ-7PC" secondAttribute="bottom" constant="8" id="rWc-Pm-NcH"/>
+                            <constraint firstItem="fLo-nH-yuD" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-16" id="tCN-A0-aZ6"/>
+                            <constraint firstItem="fLo-nH-yuD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="wdp-IP-ujD"/>
                             <constraint firstItem="I3p-Y8-kdr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="x29-0g-caJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -85,6 +107,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="72.799999999999997" y="33.733133433283363"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="clouds_background" width="640" height="1136"/>
+    </resources>
 </document>
