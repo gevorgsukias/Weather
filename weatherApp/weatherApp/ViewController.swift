@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 class ViewController: UIViewController {
     
@@ -19,6 +20,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         setupCollectionView()
+        GMSServices.provideAPIKey("AIzaSyDOVVrCJArjWKnbol6Dh9ln5qba0Jna-LU")
     }
     
     override func didReceiveMemoryWarning() {
