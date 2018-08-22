@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C018A35212E0F33003A11C1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C018A34212E0F33003A11C1 /* BaseViewController.swift */; };
 		2C69BC442129D62B00761F7A /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69BC432129D62B00761F7A /* SwiftyJSON.swift */; };
 		2C69BC482129D98100761F7A /* WeatherRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69BC472129D98100761F7A /* WeatherRequestManager.swift */; };
 		2C88FFBE212CA3C80037DD7C /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 2C88FFBD212CA3C80037DD7C /* Podfile */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C018A34212E0F33003A11C1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		2C69BC432129D62B00761F7A /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Extensions/SwiftyJSON.swift; sourceTree = SOURCE_ROOT; };
 		2C69BC472129D98100761F7A /* WeatherRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRequestManager.swift; sourceTree = "<group>"; };
 		2C88FFBD212CA3C80037DD7C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				2CC14C0F212B3FBE00869D0F /* WeatherDataManager.swift */,
 				2CC14C11212B70A100869D0F /* WeatherCollectionViewCell.swift */,
 				2CC14C12212B70A100869D0F /* WeatherCollectionViewCell.xib */,
+				2C018A34212E0F33003A11C1 /* BaseViewController.swift */,
 			);
 			path = weatherApp;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				2CADB61D212753290011F303 /* ViewController.swift in Sources */,
 				2CC14C0E212B2B1200869D0F /* WeatherDayData.swift in Sources */,
 				2C69BC482129D98100761F7A /* WeatherRequestManager.swift in Sources */,
+				2C018A35212E0F33003A11C1 /* BaseViewController.swift in Sources */,
 				2CADB61B212753290011F303 /* AppDelegate.swift in Sources */,
 				2CC14C13212B70A100869D0F /* WeatherCollectionViewCell.swift in Sources */,
 			);

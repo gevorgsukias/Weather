@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 enum WeatherError: Error {
     case requestFailed
@@ -35,6 +36,25 @@ class WeatherRequestManager {
             fail(.unknownError)
             return
         }
+        getWeather(url: url, fail: fail, success: success)
+    }
+    
+    func getWeather(location: CLLocation, fail: @escaping WeatherCompletionFail, success:@escaping WeatherCompletionSuccess) {
+        var lat:String = "\(location.coordinate.latitude)"
+//        var token = lat.components(separatedBy: ".")
+//        lat = token[0]
+        var lon:String = "\(location.coordinate.longitude)"
+//        token = lon.components(separatedBy: ".")
+//        lon = token[0]
+        let url = URL(string: baseURLPath + "lat=" + lat + "&lon=" + lon + "&units=metric&APPID=" + APIKey)
+        if url == nil {
+            fail(.unknownError)
+            return
+        }
+        getWeather(url: url, fail: fail, success: success)
+    }
+    
+    func getWeather(url : URL!, fail: @escaping WeatherCompletionFail, success:@escaping WeatherCompletionSuccess) {
         session.dataTask(with: url!) { data, URLResponse, requestError in
             guard let data = data else {
                 if let _ = requestError {

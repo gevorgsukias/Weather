@@ -10,7 +10,7 @@ import UIKit
 import GooglePlaces
 import MapKit
 
-class ViewController: UIViewController {
+class ViewController: BaseViewController {
     
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     @IBOutlet weak var cityNameLabel: UILabel!
@@ -41,10 +41,6 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        locationManager.requestAlwaysAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
-        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,36 +80,44 @@ class ViewController: UIViewController {
         navigationController?.view.backgroundColor = UIColor.clear
     }
     
-//    func setCityName(name: String!) {
-//        while (cityNameLabel.text != nil && !(cityNameLabel.text?.isEmpty)!) {
-//            cityNameLabel.text?.removeLast()
-//        }
-//
-//        for i in 0...name.count - 1 {
-//        }
-//    }
-    
     func requestWithCity(name: String!) {
         WeatherRequestManager.shared.getWeather(cityName: name, fail: { [weak self] (reason) in
-            self?.weatherDataManager = WeatherDataManager()
-            DispatchQueue.main.async {
-                switch reason {
-                case .cityNotFound:
-                    self?.cityNameLabel.text = "City Not Found :/"
-                case .noData:
-                    self?.cityNameLabel.text = "No Data :/"
-                case .requestFailed:
-                    self?.cityNameLabel.text = "Request Failed :/"
-                case .unknownError:
-                    self?.cityNameLabel.text = "Oops! Something Went Wrong :/"
-                }
-                self?.weatherCollectionView.reloadData()
-            }
+            self?.failWithReason(reason: reason)
         }) { [weak self] (json) in
             self?.weatherDataManager = WeatherDataManager.init(json: json)
             DispatchQueue.main.async {
                 self?.weatherCollectionView.reloadData()
             }
+        }
+    }
+    
+    func requestWithLocation(location: CLLocation) {
+        WeatherRequestManager.shared.getWeather(location: location, fail: { [weak self] (reason) in
+            self?.failWithReason(reason: reason)
+        }) { [weak self] (json) in
+            self?.weatherDataManager = WeatherDataManager.init(json: json)
+            let cityName = json["city"]["name"].stringValue
+            DispatchQueue.main.async {
+                self?.cityNameLabel.text = cityName.isEmpty ? "Current Location" : cityName
+                self?.weatherCollectionView.reloadData()
+            }
+        }
+    }
+    
+    func failWithReason(reason : WeatherError) {
+        weatherDataManager = WeatherDataManager()
+        DispatchQueue.main.async { [weak self] in
+            switch reason {
+            case .cityNotFound:
+                self?.cityNameLabel.text = "City Not Found :/"
+            case .noData:
+                self?.cityNameLabel.text = "No Data :/"
+            case .requestFailed:
+                self?.cityNameLabel.text = "Request Failed :/"
+            case .unknownError:
+                self?.cityNameLabel.text = "Oops! Something Went Wrong :/"
+            }
+            self?.weatherCollectionView.reloadData()
         }
     }
 }
@@ -168,11 +172,13 @@ extension ViewController : GMSAutocompleteResultsViewControllerDelegate {
 
 extension ViewController : UISearchBarDelegate {
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-        self.locationManager.requestAlwaysAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
+            locationManager.requestLocation()
+            showActivityIndicator(uiView: view)
         }
     }
     
@@ -188,9 +194,15 @@ extension ViewController : UISearchBarDelegate {
 extension ViewController : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            let myLocation = CLLocationCoordinate2DMake(location.coordinate.latitude,location.coordinate.longitude)
-            //call api
+            requestWithLocation(location: location)
+        } else {
+            cityNameLabel.text = "Oops! Something Went Wrong :/"
         }
-        locationManager.stopUpdatingLocation()
+        hideActivityIndicator()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        cityNameLabel.text = "Oops! Something Went Wrong :/"
+        weatherCollectionView.reloadData()
     }
 }
