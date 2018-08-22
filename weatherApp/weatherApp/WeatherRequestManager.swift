@@ -11,6 +11,8 @@ import Foundation
 enum WeatherError: Error {
     case requestFailed
     case noData
+    case cityNotFound
+    case unknownError
 }
 
 class WeatherRequestManager {
@@ -27,8 +29,12 @@ class WeatherRequestManager {
     typealias WeatherCompletionFail = (WeatherError) -> Void
     
     func getWeather(cityName: String!, fail: @escaping WeatherCompletionFail, success:@escaping WeatherCompletionSuccess) {
-        let url = URL(string: baseURLPath + "q=" + cityName + "&units=metric&APPID=" + APIKey)
-        
+        let trimmedCityName = cityName.replacingOccurrences(of: " ", with: "+")
+        let url = URL(string: baseURLPath + "q=" + trimmedCityName + "&units=metric&APPID=" + APIKey)
+        if url == nil {
+            fail(.unknownError)
+            return
+        }
         session.dataTask(with: url!) { data, URLResponse, requestError in
             guard let data = data else {
                 if let _ = requestError {
@@ -42,7 +48,14 @@ class WeatherRequestManager {
             
             do {
                 let json = try JSON(data: data)
-                success(json)
+                if json["cod"].stringValue == "200" {
+                    success(json)
+                } else if json["message"].stringValue == "city not found" {
+                    fail(.cityNotFound)
+                } else {
+                    fail(.unknownError)
+                }
+                
             } catch {
                 fail(.noData)
             }

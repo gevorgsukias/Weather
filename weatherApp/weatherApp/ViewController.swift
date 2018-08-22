@@ -7,20 +7,25 @@
 //
 
 import UIKit
-import GoogleMaps
+import GooglePlaces
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var weatherCollectionView: UICollectionView!
+    @IBOutlet weak var cityNameLabel: UILabel!
     var weatherDataManager : WeatherDataManager?
     let session = URLSession.shared
     let collectionCellIdentifier = "WeatherCollectionViewCell"
+    
+    var resultsViewController: GMSAutocompleteResultsViewController?
+    var searchController: UISearchController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCollectionView()
-        GMSServices.provideAPIKey("AIzaSyDOVVrCJArjWKnbol6Dh9ln5qba0Jna-LU")
+        setupAutocomplete()
+        setupNavigationController()
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,9 +38,55 @@ class ViewController: UIViewController {
         weatherCollectionView.register(UINib(nibName: "WeatherCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: collectionCellIdentifier)
     }
     
-    @IBAction func weatherBtnPressed(_ sender: UIButton) {
-        WeatherRequestManager.shared.getWeather(cityName: "Moscow", fail: { (error) in
-            
+    func setupAutocomplete() {
+        resultsViewController = GMSAutocompleteResultsViewController()
+        resultsViewController?.delegate = self
+        let filter = GMSAutocompleteFilter()
+        filter.type = .city
+        resultsViewController?.autocompleteFilter = filter
+        
+        searchController = UISearchController(searchResultsController: resultsViewController)
+        searchController?.searchResultsUpdater = resultsViewController
+        
+        searchController?.searchBar.sizeToFit()
+        navigationItem.titleView = searchController?.searchBar
+        
+        definesPresentationContext = true
+        searchController?.hidesNavigationBarDuringPresentation = false
+    }
+    
+    func setupNavigationController() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = UIColor.clear
+    }
+    
+//    func setCityName(name: String!) {
+//        while (cityNameLabel.text != nil && !(cityNameLabel.text?.isEmpty)!) {
+//            cityNameLabel.text?.removeLast()
+//        }
+//
+//        for i in 0...name.count - 1 {
+//        }
+//    }
+    
+    func requestWithCity(name: String!) {
+        WeatherRequestManager.shared.getWeather(cityName: name, fail: { [weak self] (reason) in
+            self?.weatherDataManager = WeatherDataManager()
+            DispatchQueue.main.async {
+                switch reason {
+                case .cityNotFound:
+                    self?.cityNameLabel.text = "City Not Found :/"
+                case .noData:
+                    self?.cityNameLabel.text = "No Data :/"
+                case .requestFailed:
+                    self?.cityNameLabel.text = "Request Failed :/"
+                case .unknownError:
+                    self?.cityNameLabel.text = "Oops! Something Went Wrong :/"
+                }
+                self?.weatherCollectionView.reloadData()
+            }
         }) { [weak self] (json) in
             self?.weatherDataManager = WeatherDataManager.init(json: json)
             DispatchQueue.main.async {
@@ -68,5 +119,27 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(12, 0, 84, 0)
+    }
+}
+
+extension ViewController : GMSAutocompleteResultsViewControllerDelegate {
+    func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
+                           didAutocompleteWith place: GMSPlace) {
+        searchController?.isActive = false
+        cityNameLabel.text = place.name
+        requestWithCity(name: place.name)
+    }
+    
+    func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
+                           didFailAutocompleteWithError error: Error){
+        print("Error: ", error.localizedDescription)
+    }
+    
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 }
