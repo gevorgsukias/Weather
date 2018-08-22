@@ -8,6 +8,7 @@
 
 import UIKit
 import GooglePlaces
+import MapKit
 
 class ViewController: UIViewController {
     
@@ -20,12 +21,30 @@ class ViewController: UIViewController {
     var resultsViewController: GMSAutocompleteResultsViewController?
     var searchController: UISearchController?
     
+    lazy var locationManager: CLLocationManager = {
+        var _locationManager = CLLocationManager()
+        _locationManager.delegate = self
+        _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        _locationManager.activityType = .automotiveNavigation
+        _locationManager.distanceFilter = 10.0
+        
+        return _locationManager
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCollectionView()
         setupAutocomplete()
         setupNavigationController()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        locationManager.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,6 +69,9 @@ class ViewController: UIViewController {
         
         searchController?.searchBar.sizeToFit()
         navigationItem.titleView = searchController?.searchBar
+        searchController?.searchBar.showsBookmarkButton = true
+        searchController?.searchBar.setImage(UIImage(named: "target"), for: .bookmark, state: .normal)
+        searchController?.searchBar.delegate = self
         
         definesPresentationContext = true
         searchController?.hidesNavigationBarDuringPresentation = false
@@ -141,5 +163,34 @@ extension ViewController : GMSAutocompleteResultsViewControllerDelegate {
     
     func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+}
+
+extension ViewController : UISearchBarDelegate {
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        self.locationManager.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchController?.searchBar.showsBookmarkButton = false
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchController?.searchBar.showsBookmarkButton = true
+    }
+}
+
+extension ViewController : CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let myLocation = CLLocationCoordinate2DMake(location.coordinate.latitude,location.coordinate.longitude)
+            //call api
+        }
+        locationManager.stopUpdatingLocation()
     }
 }
