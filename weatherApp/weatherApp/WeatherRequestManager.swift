@@ -9,13 +9,6 @@
 import Foundation
 import CoreLocation
 
-enum WeatherError: Error {
-    case requestFailed
-    case noData
-    case cityNotFound
-    case unknownError
-}
-
 class WeatherRequestManager {
     
     static let shared = WeatherRequestManager()
@@ -40,10 +33,10 @@ class WeatherRequestManager {
     }
     
     func getWeather(location: CLLocation, fail: @escaping WeatherCompletionFail, success:@escaping WeatherCompletionSuccess) {
-        var lat:String = "\(location.coordinate.latitude)"
+        let lat:String = "\(location.coordinate.latitude)"
 //        var token = lat.components(separatedBy: ".")
 //        lat = token[0]
-        var lon:String = "\(location.coordinate.longitude)"
+        let lon:String = "\(location.coordinate.longitude)"
 //        token = lon.components(separatedBy: ".")
 //        lon = token[0]
         let url = URL(string: baseURLPath + "lat=" + lat + "&lon=" + lon + "&units=metric&APPID=" + APIKey)

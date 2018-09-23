@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2C018A35212E0F33003A11C1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C018A34212E0F33003A11C1 /* BaseViewController.swift */; };
+		2C09341C2157F07100CE9B72 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09341B2157F07100CE9B72 /* APIService.swift */; };
+		2C0934202157F16500CE9B72 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09341F2157F16500CE9B72 /* WeatherViewModel.swift */; };
 		2C69BC442129D62B00761F7A /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69BC432129D62B00761F7A /* SwiftyJSON.swift */; };
-		2C69BC482129D98100761F7A /* WeatherRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69BC472129D98100761F7A /* WeatherRequestManager.swift */; };
 		2C88FFBE212CA3C80037DD7C /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 2C88FFBD212CA3C80037DD7C /* Podfile */; };
 		2CADB61B212753290011F303 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CADB61A212753290011F303 /* AppDelegate.swift */; };
 		2CADB61D212753290011F303 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CADB61C212753290011F303 /* ViewController.swift */; };
@@ -17,7 +18,6 @@
 		2CADB6222127532B0011F303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CADB6212127532B0011F303 /* Assets.xcassets */; };
 		2CADB6252127532B0011F303 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CADB6232127532B0011F303 /* LaunchScreen.storyboard */; };
 		2CC14C0E212B2B1200869D0F /* WeatherDayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC14C0D212B2B1200869D0F /* WeatherDayData.swift */; };
-		2CC14C10212B3FBE00869D0F /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC14C0F212B3FBE00869D0F /* WeatherDataManager.swift */; };
 		2CC14C13212B70A100869D0F /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC14C11212B70A100869D0F /* WeatherCollectionViewCell.swift */; };
 		2CC14C14212B70A100869D0F /* WeatherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CC14C12212B70A100869D0F /* WeatherCollectionViewCell.xib */; };
 		C12F230309E64A6C01927753 /* libPods-weatherApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8FE9060EEB93553EF74C32 /* libPods-weatherApp.a */; };
@@ -25,8 +25,9 @@
 
 /* Begin PBXFileReference section */
 		2C018A34212E0F33003A11C1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		2C09341B2157F07100CE9B72 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		2C09341F2157F16500CE9B72 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		2C69BC432129D62B00761F7A /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Extensions/SwiftyJSON.swift; sourceTree = SOURCE_ROOT; };
-		2C69BC472129D98100761F7A /* WeatherRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRequestManager.swift; sourceTree = "<group>"; };
 		2C88FFBD212CA3C80037DD7C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		2CADB617212753290011F303 /* weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CADB61A212753290011F303 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,7 +37,6 @@
 		2CADB6242127532B0011F303 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2CADB6262127532B0011F303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2CC14C0D212B2B1200869D0F /* WeatherDayData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDayData.swift; sourceTree = "<group>"; };
-		2CC14C0F212B3FBE00869D0F /* WeatherDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
 		2CC14C11212B70A100869D0F /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		2CC14C12212B70A100869D0F /* WeatherCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherCollectionViewCell.xib; sourceTree = "<group>"; };
 		4D4D95CD3008B80DBFD72B03 /* Pods-weatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weatherApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-weatherApp/Pods-weatherApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -56,6 +56,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C09341A2157F05900CE9B72 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				2C09341B2157F07100CE9B72 /* APIService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		2C09341D2157F0AE00CE9B72 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				2C018A34212E0F33003A11C1 /* BaseViewController.swift */,
+				2CADB61C212753290011F303 /* ViewController.swift */,
+				2C09341F2157F16500CE9B72 /* WeatherViewModel.swift */,
+				2CC14C11212B70A100869D0F /* WeatherCollectionViewCell.swift */,
+				2CC14C12212B70A100869D0F /* WeatherCollectionViewCell.xib */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		2C09341E2157F0BE00CE9B72 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2CC14C0D212B2B1200869D0F /* WeatherDayData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		2C69BC422129D61400761F7A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,18 +116,14 @@
 		2CADB619212753290011F303 /* weatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				2C09341E2157F0BE00CE9B72 /* Model */,
+				2C09341D2157F0AE00CE9B72 /* Module */,
+				2C09341A2157F05900CE9B72 /* Service */,
 				2CADB61A212753290011F303 /* AppDelegate.swift */,
-				2CADB61C212753290011F303 /* ViewController.swift */,
 				2CADB61E212753290011F303 /* Main.storyboard */,
 				2CADB6212127532B0011F303 /* Assets.xcassets */,
 				2CADB6232127532B0011F303 /* LaunchScreen.storyboard */,
 				2CADB6262127532B0011F303 /* Info.plist */,
-				2C69BC472129D98100761F7A /* WeatherRequestManager.swift */,
-				2CC14C0D212B2B1200869D0F /* WeatherDayData.swift */,
-				2CC14C0F212B3FBE00869D0F /* WeatherDataManager.swift */,
-				2CC14C11212B70A100869D0F /* WeatherCollectionViewCell.swift */,
-				2CC14C12212B70A100869D0F /* WeatherCollectionViewCell.xib */,
-				2C018A34212E0F33003A11C1 /* BaseViewController.swift */,
 			);
 			path = weatherApp;
 			sourceTree = "<group>";
@@ -237,13 +261,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CC14C10212B3FBE00869D0F /* WeatherDataManager.swift in Sources */,
 				2C69BC442129D62B00761F7A /* SwiftyJSON.swift in Sources */,
 				2CADB61D212753290011F303 /* ViewController.swift in Sources */,
 				2CC14C0E212B2B1200869D0F /* WeatherDayData.swift in Sources */,
-				2C69BC482129D98100761F7A /* WeatherRequestManager.swift in Sources */,
+				2C0934202157F16500CE9B72 /* WeatherViewModel.swift in Sources */,
 				2C018A35212E0F33003A11C1 /* BaseViewController.swift in Sources */,
 				2CADB61B212753290011F303 /* AppDelegate.swift in Sources */,
+				2C09341C2157F07100CE9B72 /* APIService.swift in Sources */,
 				2CC14C13212B70A100869D0F /* WeatherCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

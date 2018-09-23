@@ -14,12 +14,14 @@ class ViewController: BaseViewController {
     
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     @IBOutlet weak var cityNameLabel: UILabel!
-    var weatherDataManager : WeatherDataManager?
-    let session = URLSession.shared
     let collectionCellIdentifier = "WeatherCollectionViewCell"
     
     var resultsViewController: GMSAutocompleteResultsViewController?
     var searchController: UISearchController?
+    
+    lazy var viewModel: WeatherViewModel = {
+        return WeatherViewModel()
+    }()
     
     lazy var locationManager: CLLocationManager = {
         var _locationManager = CLLocationManager()
@@ -34,17 +36,45 @@ class ViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initVM()
+        
         setupCollectionView()
         setupAutocomplete()
         setupNavigationController()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    func initVM() {
+        
+        // Naive binding
+        viewModel.showAlertClosure = { [weak self] () in
+            DispatchQueue.main.async {
+                if let message = self?.viewModel.alertMessage {
+                    self?.showAlert(message)
+                }
+            }
+        }
+        
+        viewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.viewModel.isLoading ?? false
+                if isLoading {
+                    if let weakSelf = self {
+                        weakSelf.showActivityIndicator(uiView: weakSelf.view)
+                    }
+                }else {
+                    self?.hideActivityIndicator()
+                }
+            }
+        }
+        
+        viewModel.reloadCollectionViewClosure = { [weak self] () in
+            DispatchQueue.main.async {
+                if let cityName = self?.viewModel.cityName {
+                    self?.cityNameLabel.text = cityName.isEmpty ? "Current Location" : cityName
+                }
+                self?.weatherCollectionView.reloadData()
+            }
+        }
     }
     
     func setupCollectionView() {
@@ -80,45 +110,21 @@ class ViewController: BaseViewController {
         navigationController?.view.backgroundColor = UIColor.clear
     }
     
-    func requestWithCity(name: String!) {
-        WeatherRequestManager.shared.getWeather(cityName: name, fail: { [weak self] (reason) in
-            self?.failWithReason(reason: reason)
-        }) { [weak self] (json) in
-            self?.weatherDataManager = WeatherDataManager.init(json: json)
-            DispatchQueue.main.async {
-                self?.weatherCollectionView.reloadData()
-            }
+    func showAlert( _ message: String ) {
+        DispatchQueue.main.async { [weak self] in
+            let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+            alert.addAction( UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self?.present(alert, animated: true, completion: nil)
         }
     }
+    
+    func requestWithCity(name: String!) {
+        viewModel.initFetch(cityName: name)
+    }
+
     
     func requestWithLocation(location: CLLocation) {
-        WeatherRequestManager.shared.getWeather(location: location, fail: { [weak self] (reason) in
-            self?.failWithReason(reason: reason)
-        }) { [weak self] (json) in
-            self?.weatherDataManager = WeatherDataManager.init(json: json)
-            let cityName = json["city"]["name"].stringValue
-            DispatchQueue.main.async {
-                self?.cityNameLabel.text = cityName.isEmpty ? "Current Location" : cityName
-                self?.weatherCollectionView.reloadData()
-            }
-        }
-    }
-    
-    func failWithReason(reason : WeatherError) {
-        weatherDataManager = WeatherDataManager()
-        DispatchQueue.main.async { [weak self] in
-            switch reason {
-            case .cityNotFound:
-                self?.cityNameLabel.text = "City Not Found :/"
-            case .noData:
-                self?.cityNameLabel.text = "No Data :/"
-            case .requestFailed:
-                self?.cityNameLabel.text = "Request Failed :/"
-            case .unknownError:
-                self?.cityNameLabel.text = "Oops! Something Went Wrong :/"
-            }
-            self?.weatherCollectionView.reloadData()
-        }
+        viewModel.initFetch(location: location)
     }
 }
 
@@ -126,17 +132,22 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
     //MARK: CollectionView Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.weatherDataManager?.days.count ?? 0
+        return viewModel.numberOfCells
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let c = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath)
-        
-        if let cell = c as? WeatherCollectionViewCell {
-            cell.setupWithWeatherDayData(day: self.weatherDataManager?.days[indexPath.row])
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath) as? WeatherCollectionViewCell else {
+            fatalError("Cell not exists in storyboard")
         }
         
-        return c
+        let cellVM = viewModel.getCellViewModel( at: indexPath )
+        
+        cell.temperatureLabel.text = cellVM.temperatureText
+        cell.dateLabel.text = cellVM.dateText
+        cell.weatherLabel.text = cellVM.weatherText
+        cell.weatherDescriptionLabel.text = cellVM.weatherDescText
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -196,13 +207,13 @@ extension ViewController : CLLocationManagerDelegate {
         if let location = locations.last {
             requestWithLocation(location: location)
         } else {
-            cityNameLabel.text = "Oops! Something Went Wrong :/"
+            showAlert("Oops! Something Went Wrong :/")
         }
         hideActivityIndicator()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        cityNameLabel.text = "Oops! Something Went Wrong :/"
+        showAlert("Oops! Something Went Wrong :/")
         weatherCollectionView.reloadData()
     }
 }

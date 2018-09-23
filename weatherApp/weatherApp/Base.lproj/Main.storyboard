@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hcp-26-mGG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hcp-26-mGG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -45,7 +45,7 @@
                                 <rect key="frame" x="16" y="80" width="343" height="56"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter City Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Pq-hn-fyX">
-                                        <rect key="frame" x="44.5" y="11" width="255" height="34"/>
+                                        <rect key="frame" x="44" y="11" width="255" height="34"/>
                                         <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="26"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -70,12 +70,12 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dAm-qI-T3c" secondAttribute="trailing" constant="16" id="4MR-zn-gdE"/>
                             <constraint firstItem="dAm-qI-T3c" firstAttribute="top" secondItem="ccm-Nb-Zv6" secondAttribute="bottom" id="BlC-ki-3TS"/>
                             <constraint firstItem="ccm-Nb-Zv6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="EbD-kT-rjH"/>
-                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="HhT-c1-Rjf"/>
+                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="HhT-c1-Rjf"/>
                             <constraint firstItem="ccm-Nb-Zv6" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="Rcc-MM-C9b"/>
                             <constraint firstItem="dAm-qI-T3c" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="SQF-sL-ooe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ccm-Nb-Zv6" secondAttribute="trailing" constant="16" id="ahf-VM-Amz"/>
-                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hbk-bE-nAz"/>
-                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="pGU-5b-Nq7"/>
+                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="hbk-bE-nAz"/>
+                            <constraint firstItem="RZf-5X-FJQ" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="pGU-5b-Nq7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dAm-qI-T3c" secondAttribute="bottom" id="pUo-nT-euG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
